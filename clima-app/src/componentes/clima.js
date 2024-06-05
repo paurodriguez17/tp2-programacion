@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { FaTemperatureHigh, FaCloud, FaTint, FaWind, FaCloudSun  } from 'react-icons/fa';
 
 const Weather = () => {
   const [city, setCity] = useState('');
@@ -23,6 +24,7 @@ const Weather = () => {
 
   return (
     <div>
+      <h1><FaCloudSun  /></h1>
       <h2>Clima</h2>
       <input
         type="text"
@@ -36,11 +38,11 @@ const Weather = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {weatherData && (
         <div>
-          <h3>Clima en {weatherData.ciudad}</h3>
-          <p>Temperatura: {weatherData.temperatura}°C</p>
-          <p>Descripción: {weatherData.descripción}</p>
-          <p>Humedad: {weatherData.humedad}%</p>
-          <p>Velocidad del viento: {weatherData["velocidad del viento"]} km/h</p>
+           <h3>Clima en {weatherData.ciudad}</h3>
+          <p><FaTemperatureHigh /> Temperatura: {weatherData.temperatura}°C</p>
+          <p><FaCloud /> Descripción: {weatherData.descripción}</p>
+          <p><FaTint /> Humedad: {weatherData.humedad}%</p>
+          <p><FaWind /> Velocidad del viento: {weatherData["velocidad del viento"]} km/h</p>
         </div>
       )}
     </div>
