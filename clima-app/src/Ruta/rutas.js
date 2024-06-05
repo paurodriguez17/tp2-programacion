@@ -6,7 +6,7 @@ const SearchHistory = require('../modelos/historial');
 const API_KEY = '054b06cbdc280d1965eebba0a076c66d';
 
 const weatherDescriptions = {
-    "clear sky": "cielo despejado",
+    "clear sky": "cielo despejado", 
     "few clouds": "pocas nubes",
     "scattered clouds": "nubes dispersas",
     "broken clouds": "nubes rotas",
@@ -40,13 +40,16 @@ router.get('/:city', async (req, res) => {
             [propertyTranslations.temperature]: weatherData.main.temp,
             [propertyTranslations.description]: weatherDescriptions[weatherData.weather[0].description] || weatherData.weather[0].description,
             [propertyTranslations.humidity]: weatherData.main.humidity,
-            [propertyTranslations.windSpeed]: windSpeedKmh.toFixed(2)
+            [propertyTranslations.windSpeed]: windSpeedKmh.toFixed(2),
         };
 
+    const searchEntry = new SearchHistory({ city: weatherData.name });
+    await searchEntry.save();
+    
         res.json(translatedWeather);
     } catch (error) {
-        console.error('Error retrieving weather data:', error);
-        res.status(500).json({ error: 'Error retrieving weather data' });
+        console.error('Error al recuperar datos meteorológicos', error);
+        res.status(500).json({ error: 'Error al recuperar datos meteorológicos' });
     }
 });
 
